@@ -1,0 +1,50 @@
+.nav {
+  grid-area: 1 / 2 / 2 / -1;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav>form {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 20rem;
+}
+
+.nav>form>input {
+  border: none;
+  flex: 1;
+  outline: none;
+  letter-spacing: -0.5px;
+  font-size: 1.1rem;
+}
+
+.nav>form>button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+  color: rgb(109, 109, 109);
+  margin-right: 0.6rem;
+  cursor: pointer;
+}
+
+.notifications {
+  margin: 0 2rem 0 auto;
+  border-right: 0.3px solid rgb(224, 224, 224);
+  border-left: 0.3px solid rgb(224, 224, 224);
+  height: 100%;
+  font-size: 1.3rem;
+  width: 3rem;
+  color: rgb(100, 100, 100);
+  position: relative;
+}
+
+.notifications>i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
