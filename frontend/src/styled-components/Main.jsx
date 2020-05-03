@@ -11,7 +11,7 @@ export const Main = styled.main`
   }
 
   .content {
-    background-color: purple;
-    padding: 0 2rem;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.01);
   }
 `;
