@@ -4,6 +4,7 @@ import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import imgSrc from "../../assets/profile-img.jpg";
 import { Button } from "../../styled-components/Button";
 import { Videos } from "../../components/Videos/Videos";
+import { Image } from "../../components/Image/Image";
 
 export const Profile = () => {
   useDocumentTitle("Web Dev Simplified");
@@ -11,9 +12,13 @@ export const Profile = () => {
   return (
     <section>
       <header className={classes.header}>
-        <div className={classes.img}>
-          <img src={imgSrc} alt="Profile Image" />
-        </div>
+        <Image
+          src={imgSrc}
+          alt="Profile Image"
+          width="10rem"
+          height="10rem"
+          border="5px solid white"
+        />
 
         <div className={classes.info}>
           <h3>Web Dev Simplified</h3>

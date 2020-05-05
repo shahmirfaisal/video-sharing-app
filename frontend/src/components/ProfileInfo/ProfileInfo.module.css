@@ -1,0 +1,18 @@
+.profileInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.info {
+    margin-right: auto;
+    margin-left: 1rem;
+}
+
+.info>p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}

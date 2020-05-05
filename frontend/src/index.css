@@ -18,7 +18,8 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-    border-left: 0.5px solid rgba(0, 0, 0, 0.6);
+    border: 0.5px solid rgba(0, 0, 0, 0.4);
+    border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb {

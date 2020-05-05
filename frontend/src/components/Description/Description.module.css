@@ -1,0 +1,22 @@
+.description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.description.descriptionReadMore {
+    white-space: pre-wrap;
+}
+
+.readMore {
+    margin-top: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.readMore:hover {
+    text-decoration: underline;
+}

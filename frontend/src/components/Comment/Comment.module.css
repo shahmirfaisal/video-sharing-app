@@ -1,0 +1,14 @@
+.comment {
+    padding: 1rem 0;
+    border-bottom: 0.3px solid rgb(224, 224, 224);
+}
+
+.comment>header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.comment>header>h5 {
+    margin-left: 1rem;
+}

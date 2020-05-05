@@ -31,21 +31,3 @@
   margin-right: 0.6rem;
   cursor: pointer;
 }
-
-.notifications {
-  margin: 0 2rem 0 auto;
-  border-right: 0.3px solid rgb(224, 224, 224);
-  border-left: 0.3px solid rgb(224, 224, 224);
-  height: 100%;
-  font-size: 1.3rem;
-  width: 3rem;
-  color: rgb(100, 100, 100);
-  position: relative;
-}
-
-.notifications>i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}

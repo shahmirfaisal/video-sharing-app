@@ -4,6 +4,8 @@ export const Button = styled.button`
   border: none;
   outline: none;
 
+  margin: ${(props) => (props.margin ? props.margin : 0)};
+
   ${(props) =>
     props.backgroundColor && props.backgroundColor.length > 0
       ? css`
@@ -28,7 +30,15 @@ export const Button = styled.button`
       : null}
 
   :hover {
-    background-image: linear-gradient(90deg, #00d2ff 0%, #6875ff 100%);
+    ${(props) =>
+      props.hover && props.hover.length > 0
+        ? css`
+            background-color: ${props.hover};
+            background-image: none;
+          `
+        : css`
+            background-image: linear-gradient(90deg, #3a47d5 0%, #00d2ff 100%);
+          `}
   }
 
   i {

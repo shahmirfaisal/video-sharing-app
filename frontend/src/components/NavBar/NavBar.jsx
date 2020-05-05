@@ -13,10 +13,6 @@ export const NavBar = () => {
         </button>
       </form>
 
-      <Link to="/notifications" className={classes.notifications}>
-        <i className="far fa-bell"></i>
-      </Link>
-
       <Button>
         <i className="fas fa-upload"></i> Upload
       </Button>

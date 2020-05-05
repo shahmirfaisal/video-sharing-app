@@ -6,7 +6,8 @@ import App from "./App/App";
 import './index.css';
 import {
   BrowserRouter
-} from 'react-router-dom'
+} from 'react-router-dom';
+import "video-react/dist/video-react.css";
 
 
 
