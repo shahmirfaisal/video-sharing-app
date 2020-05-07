@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Video as StyledVideo } from "../../styled-components/Video";
 import videoSrc from "../../assets/videoplayback (3).mp4";
 import { useHistory } from "react-router-dom";

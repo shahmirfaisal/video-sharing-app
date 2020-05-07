@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./Home.module.css";
 import { Videos } from "../../components/Videos/Videos";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { Heading } from "../../styled-components/Heading";

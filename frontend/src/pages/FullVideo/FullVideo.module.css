@@ -52,6 +52,16 @@
     margin-top: 3rem;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form>button {
+    margin-top: 1rem;
+    align-self: flex-end;
+}
+
 @media (max-width: 1050px) {
     .fullVideo {
         width: 100%;

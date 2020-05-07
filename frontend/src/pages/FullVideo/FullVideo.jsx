@@ -5,6 +5,8 @@ import { Player } from "video-react";
 import { ProfileInfo } from "../../components/ProfileInfo/ProfileInfo";
 import { Description } from "../../components/Description/Description";
 import { Comments } from "../../components/Comments/Comments";
+import { Input } from "../../components/Input/Input";
+import { Button } from "../../styled-components/Button";
 
 export const FullVideo = () => {
   return (
@@ -35,6 +37,11 @@ export const FullVideo = () => {
       <Description />
 
       <hr />
+
+      <form className={classes.form}>
+        <Input type="text" id="comment" label="Comment" placeholder="Comment" />
+        <Button>Add Comment</Button>
+      </form>
 
       <h3 className={classes.commentsTitle}>Comments</h3>
 

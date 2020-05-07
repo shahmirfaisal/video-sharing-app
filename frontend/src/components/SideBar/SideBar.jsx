@@ -59,7 +59,7 @@ export const SideBar = (props) => {
             </li>
             <li>
               <a className={classes.link}>
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i className="fas fa-sign-out-alt"></i> Logout
               </a>
             </li>
           </>
