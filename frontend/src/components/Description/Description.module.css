@@ -1,11 +1,10 @@
 .description {
+    max-height: 1.1rem;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .description.descriptionReadMore {
-    white-space: pre-wrap;
+    max-height: 10000rem;
 }
 
 .readMore {

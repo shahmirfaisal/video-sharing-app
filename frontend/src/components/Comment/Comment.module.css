@@ -11,4 +11,9 @@
 
 .comment>header>h5 {
     margin-left: 1rem;
+    cursor: pointer;
+}
+
+.comment>header>h5:hover {
+    text-decoration: underline;
 }

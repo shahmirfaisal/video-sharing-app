@@ -7,14 +7,24 @@ export const Input = (props) => {
 
   return (
     <FormControl>
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete="off"
-      />
+      {type === "textarea" ? (
+        <textarea
+          id={id}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          autoComplete="off"
+        ></textarea>
+      ) : (
+        <input
+          id={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          autoComplete="off"
+        />
+      )}
       <label htmlFor={id}>{label}</label>
     </FormControl>
   );

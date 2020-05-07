@@ -5,7 +5,19 @@
     top: 0;
     left: 0;
     border-right: 0.3px solid rgb(224, 224, 224);
+    background-color: white;
+    transition: all 0.4s;
+}
 
+.sidebar.show {
+    transform: translateX(0);
+}
+
+@media (max-width: 870px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 200;
+    }
 }
 
 .logo {
@@ -32,6 +44,7 @@
     display: inline-block;
     width: 100%;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .link>i {

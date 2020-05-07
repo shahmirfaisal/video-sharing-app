@@ -4,7 +4,8 @@ export const FormControl = styled.div`
   display: flex;
   flex-direction: column-reverse;
 
-  input {
+  input,
+  textarea {
     font-size: 1.05rem;
     padding: 0.8rem 0.8rem 0.6rem 0.8rem;
     border: 0.5px solid rgba(0, 0, 0, 0.2);
@@ -20,6 +21,13 @@ export const FormControl = styled.div`
     :focus::placeholder {
       visibility: hidden;
     }
+  }
+
+  textarea {
+    height: 10rem;
+    resize: none;
+    -webkit-resize: none;
+    -moz-resize: none;
   }
 
   label {

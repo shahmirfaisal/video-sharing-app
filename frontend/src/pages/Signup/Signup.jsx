@@ -3,6 +3,7 @@ import { Heading } from "../../styled-components/Heading";
 import { Form } from "../../styled-components/Form";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../styled-components/Button";
+import { Link } from "react-router-dom";
 
 export const Signup = () => {
   return (
@@ -21,6 +22,12 @@ export const Signup = () => {
         <Button margin="1.3rem 0 0 0" block>
           Signup
         </Button>
+
+        <Link to="/login">
+          <p style={{ marginTop: "1.2rem", textAlign: "center" }}>
+            Already have an account? Login
+          </p>
+        </Link>
       </Form>
     </section>
   );

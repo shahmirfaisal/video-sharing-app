@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Main } from "../styled-components/Main";
 import { NavBar } from "../components/NavBar/NavBar";
 import { SideBar } from "../components/SideBar/SideBar";
@@ -11,15 +11,24 @@ import { Search } from "../pages/Search/Search";
 import { Signup } from "../pages/Signup/Signup";
 import { Login } from "../pages/Login/Login";
 import { FullVideo } from "../pages/FullVideo/FullVideo";
+import { UploadVideo } from "../pages/UploadVideo/UploadVideo";
+import { Backdrop } from "../styled-components/Backdrop";
 
 const App = () => {
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  const openSideBar = () => setShowSideBar(true);
+  const closeSideBar = () => setShowSideBar(false);
+
   return (
     <Main>
-      <NavBar />
+      <NavBar openSideBar={openSideBar} />
 
       <div className="sidebar">
-        <SideBar />
+        <SideBar showSideBar={showSideBar} />
       </div>
+
+      <Backdrop open={showSideBar} onClick={closeSideBar} />
 
       <div className="content">
         <Route path="/" exact component={Home} />
@@ -30,6 +39,8 @@ const App = () => {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/video/:id" component={FullVideo} />
+
+        <Route path="/upload-video" component={UploadVideo} />
       </div>
     </Main>
   );

@@ -2,12 +2,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding: 1rem 0;
 }
 
 .info {
     margin-right: auto;
     margin-left: 1rem;
+}
+
+.info>h4:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .info>p {
