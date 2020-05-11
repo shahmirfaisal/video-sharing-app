@@ -35,5 +35,8 @@ router.get("/search", videoController.getSearchVideos);
 // GET - /videos/:id ----- Getting a specific video
 router.get("/:id", videoController.getVideo);
 
+// POST - /videos/comment/:id ----- Posting a comment on a specific video
+router.post("/comment/:id", checkAuth, videoController.postComment);
+
 
 module.exports = router;

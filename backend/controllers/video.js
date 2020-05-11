@@ -6,7 +6,7 @@ const {
 
 exports.getVideos = async (req, res, next) => {
   try {
-    const videos = await Video.find().populate("user");
+    const videos = await Video.find().populate("user").populate("comments.user");
     res.status(200).json(videos);
   } catch (error) {
     error.statusCode = error.statusCode || 500;
@@ -41,13 +41,13 @@ exports.postVideo = async (req, res, next) => {
     description,
     user: req.userId,
     comments: [],
-    favourites: []
+    favourites: [],
   });
 
   try {
     await newVideo.save();
+    await newVideo.populate("user").execPopulate();
     res.status(201).json(newVideo);
-
   } catch (error) {
     errorHandler(next, error.message);
   }
@@ -61,14 +61,14 @@ exports.getUserVideos = async (req, res, next) => {
 
   try {
     const videos = await Video.find({
-      user: id
-    });
+      user: id,
+    }).populate("user").populate("comments.user");
     res.status(200).json(videos);
 
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
+};
 
 
 exports.getVideo = async (req, res, next) => {
@@ -77,12 +77,13 @@ exports.getVideo = async (req, res, next) => {
   } = req.params;
 
   try {
-    const video = await Video.findById(id).populate("user");
+    const video = await Video.findById(id).populate("user").populate("comments.user");
     res.status(200).json(video);
+
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
+};
 
 
 exports.postFavourite = async (req, res, next) => {
@@ -96,12 +97,13 @@ exports.postFavourite = async (req, res, next) => {
     if (!video.favourites.includes(userId)) video.favourites.push(userId);
 
     const result = await video.save();
+    await result.populate("user").populate("comments.user").execPopulate();
     res.status(200).json(result);
 
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
+};
 
 
 exports.postUnfavourite = async (req, res, next) => {
@@ -112,16 +114,16 @@ exports.postUnfavourite = async (req, res, next) => {
 
   try {
     const video = await Video.findById(videoId);
-    video.favourites = video.favourites.filter(v => v != userId);
+    video.favourites = video.favourites.filter((v) => v != userId);
 
     const result = await video.save();
+    await result.populate("user").populate("comments.user").execPopulate();
     res.status(200).json(result);
 
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
-
+};
 
 exports.getFavouriteVideos = async (req, res, next) => {
   const {
@@ -130,15 +132,14 @@ exports.getFavouriteVideos = async (req, res, next) => {
 
   try {
     const videos = await Video.find({
-      favourites: id
-    });
+      favourites: id,
+    }).populate("user").populate("comments.user");
     res.status(200).json(videos);
 
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
-
+};
 
 exports.getSearchVideos = async (req, res, next) => {
   const {
@@ -161,12 +162,40 @@ exports.getSearchVideos = async (req, res, next) => {
   try {
     const videos = await Video.find({
       title: {
-        $regex: new RegExp(regex, "gi")
-      }
-    });
+        $regex: new RegExp(regex, "gi"),
+      },
+    }).populate("user").populate("comments.user");
     res.status(200).json(videos);
 
   } catch (error) {
     errorHandler(next, error.message);
   }
-}
+};
+
+exports.postComment = async (req, res, next) => {
+  const {
+    id: videoId
+  } = req.params;
+  const userId = req.userId;
+  let {
+    comment
+  } = req.body;
+  comment = comment.trim();
+
+  if (comment.length === 0) return errorHandler(next, "Please enter a comment!", 422);
+
+  try {
+    const video = await Video.findById(videoId);
+    video.comments.push({
+      user: userId,
+      comment
+    });
+    const result = await video.save();
+    await result.populate("user").populate("comments.user").execPopulate();
+
+    res.status(201).json(result);
+
+  } catch (error) {
+    errorHandler(next, error.message);
+  }
+};

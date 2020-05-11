@@ -74,7 +74,7 @@ exports.getUser = async (req, res, next) => {
         const user = await User.findById(id);
         const videos = await Video.find({
             user: id
-        }).populate("user");
+        }).populate("user").populate("comments.user");
 
         res.status(200).json({
             user,
@@ -90,14 +90,15 @@ exports.patchUser = async (req, res, next) => {
     const id = req.userId;
     const name = req.body.name.trim();
     const img = req.files.image;
-    console.log(img, name);
 
     try {
         const user = await User.findById(id);
         if (name.length > 0) user.name = name;
         if (img) user.image = img[0].path;
+
         const result = await user.save();
         res.status(200).json(result);
+
     } catch (error) {
         errorHandler(next, error.message);
     }

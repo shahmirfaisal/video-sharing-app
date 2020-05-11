@@ -41,7 +41,7 @@ const videoSchema = new Schema({
     },
 
     comments: [{
-        userId: {
+        user: {
             type: Schema.Types.ObjectId,
             required: true,
             ref: "User"
