@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
-        default: "http://localhost:5000/assets/profile-img.jpg"
+        default: "assets/profile-img.jpg"
     },
     subscribers: {
         type: Number,

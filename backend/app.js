@@ -30,16 +30,20 @@ const storage = multer.diskStorage({
     cb(null, "./assets");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
-app.use(multer({
-  storage
-}).fields([{
-  name: "image"
-}, {
-  name: "video"
-}]));
+app.use(
+  multer({
+    storage,
+  }).fields([{
+      name: "image",
+    },
+    {
+      name: "video",
+    },
+  ])
+);
 
 // Serving the assets folder statically
 app.use("/assets", express.static(path.join(__dirname, "assets")));
@@ -52,18 +56,16 @@ app.use("/videos", videoRoutes);
 
 // Error Handling Middleware
 app.use((error, req, res, next) => {
+  console.log(error);
   res.status(error.statusCode).json({
-    message: error.message
-  })
-})
-
+    message: error.message,
+  });
+});
 
 mongoose
-  .connect(
-    process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((result) => app.listen(5000))
   .catch((err) => console.log(err));

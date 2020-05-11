@@ -5,6 +5,7 @@ const {
     validationResult
 } = require("express-validator");
 const errorHandler = require("../error-handler/error-handler");
+const Video = require("../models/video");
 
 
 exports.signup = async (req, res, next) => {
@@ -31,7 +32,7 @@ exports.signup = async (req, res, next) => {
         const token = jwt.sign({
             userId: user._id
         }, process.env.SECRET_KEY, {
-            expiresIn: "1h"
+            expiresIn: "1d"
         });
 
         res.status(201).json({
@@ -54,11 +55,50 @@ exports.login = (req, res, next) => {
     const token = jwt.sign({
         userId: req.user._id
     }, process.env.SECRET_KEY, {
-        expiresIn: "1h"
+        expiresIn: "1d"
     });
 
     res.status(200).json({
         token,
         user: req.user
     });
+}
+
+
+exports.getUser = async (req, res, next) => {
+    const {
+        id
+    } = req.params;
+
+    try {
+        const user = await User.findById(id);
+        const videos = await Video.find({
+            user: id
+        }).populate("user");
+
+        res.status(200).json({
+            user,
+            videos
+        });
+    } catch (error) {
+        errorHandler(next, error.message);
+    }
+}
+
+
+exports.patchUser = async (req, res, next) => {
+    const id = req.userId;
+    const name = req.body.name.trim();
+    const img = req.files.image;
+    console.log(img, name);
+
+    try {
+        const user = await User.findById(id);
+        if (name.length > 0) user.name = name;
+        if (img) user.image = img[0].path;
+        const result = await user.save();
+        res.status(200).json(result);
+    } catch (error) {
+        errorHandler(next, error.message);
+    }
 }
