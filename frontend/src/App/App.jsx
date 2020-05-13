@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Main } from "../styled-components/Main";
 import { NavBar } from "../components/NavBar/NavBar";
 import { SideBar } from "../components/SideBar/SideBar";
@@ -13,6 +13,8 @@ import { Login } from "../pages/Login/Login";
 import { FullVideo } from "../pages/FullVideo/FullVideo";
 import { UploadVideo } from "../pages/UploadVideo/UploadVideo";
 import { Backdrop } from "../styled-components/Backdrop";
+import { Spinner } from "../components/Spinner/Spinner";
+import { connect } from "react-redux";
 
 const App = () => {
   const [showSideBar, setShowSideBar] = useState(false);
@@ -39,11 +41,16 @@ const App = () => {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/video/:id" component={FullVideo} />
-
         <Route path="/upload-video" component={UploadVideo} />
       </div>
     </Main>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    showContentSpinner: state.showContentSpinner,
+  };
+};
+
+export default connect(mapStateToProps)(App);

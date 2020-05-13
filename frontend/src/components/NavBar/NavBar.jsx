@@ -2,11 +2,19 @@ import React from "react";
 import classes from "./NavBar.module.css";
 import { Button } from "../../styled-components/Button";
 import { useHistory } from "react-router-dom";
+import { useInput } from "../../hooks/useInput";
 
 export const NavBar = ({ openSideBar }) => {
   const history = useHistory();
+  const [value, changeValue, reset] = useInput("");
 
   const isAuth = true;
+
+  const searchVideos = (e) => {
+    e.preventDefault();
+    history.push(`/search?search=${value}`);
+    reset();
+  };
 
   return (
     <nav className={classes.nav}>
@@ -15,8 +23,13 @@ export const NavBar = ({ openSideBar }) => {
         onClick={openSideBar}
       ></i>
 
-      <form className="form">
-        <input type="text" placeholder="search..." />
+      <form className="form" onSubmit={searchVideos}>
+        <input
+          type="text"
+          placeholder="search..."
+          value={value}
+          onChange={changeValue}
+        />
         <button>
           <i className="fas fa-search"></i>
         </button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./FullVideo.module.css";
 import videoSrc from "../../assets/videoplayback (3).mp4";
 import { Player } from "video-react";
@@ -7,45 +7,84 @@ import { Description } from "../../components/Description/Description";
 import { Comments } from "../../components/Comments/Comments";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../styled-components/Button";
+import { Spinner } from "../../components/Spinner/Spinner";
+import { connect } from "react-redux";
+import { getVideo } from "../../store/actions/actionCreators";
+import { useParams } from "react-router-dom";
 
-export const FullVideo = () => {
+const FullVideo = ({ showContentSpinner, getVideo, video }) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    console.log(id);
+    getVideo(id);
+  }, []);
+
   return (
-    <section className={classes.fullVideo}>
-      <div className={classes.video}>
-        <Player src={videoSrc} />
-      </div>
+    <>
+      {showContentSpinner || !video ? (
+        <Spinner />
+      ) : (
+        <section className={classes.fullVideo}>
+          <div className={classes.video}>
+            <Player src={`http://localhost:5000/${video.video}`} />
+          </div>
 
-      <h3 className={classes.title}>MERN Stack Tutorial</h3>
+          <h3 className={classes.title}>{video.title}</h3>
 
-      <div className={classes.info}>
-        <p>5 May, 2020</p>
-        <div>
-          <i className="fas fa-thumbs-up"></i>
-          123
-        </div>
-        <div>
-          <i className="fas fa-thumbs-down"></i>
-          123
-        </div>
-        <div>
-          <i className="fas fa-heart"></i>
-          45
-        </div>
-      </div>
+          <div className={classes.info}>
+            <p>{video.createdAt}</p>
 
-      <ProfileInfo />
-      <Description />
+            <div>
+              <i className="fas fa-heart"></i>
+              {video.favourites.length}
+            </div>
+          </div>
 
-      <hr />
+          <ProfileInfo user={video.user} />
+          <Description text={video.description} />
 
-      <form className={classes.form}>
-        <Input type="text" id="comment" label="Comment" placeholder="Comment" />
-        <Button>Add Comment</Button>
-      </form>
+          <hr />
 
-      <h3 className={classes.commentsTitle}>Comments</h3>
+          <form className={classes.form}>
+            <Input
+              type="text"
+              id="comment"
+              label="Comment"
+              placeholder="Comment"
+            />
+            <Button>Add Comment</Button>
+          </form>
 
-      <Comments />
-    </section>
+          <h3 className={classes.commentsTitle}>Comments</h3>
+
+          {video.comments.length === 0 ? (
+            <p className={classes.noComments}>No Comments</p>
+          ) : (
+            <Comments comments={video.comments} />
+          )}
+        </section>
+      )}
+    </>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    showContentSpinner: state.showContentSpinner,
+    video: state.video,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getVideo: (_id) => dispatch(getVideo(_id)),
+  };
+};
+
+const FullVideoComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FullVideo);
+
+export { FullVideoComponent as FullVideo };

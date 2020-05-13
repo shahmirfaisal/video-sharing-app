@@ -1,0 +1,5 @@
+export const GET_ALL_VIDEOS = "GET_ALL_VIDEOS";
+export const TOGGLE_CONTENT_SPINNER = "TOGGLE_CONTENT_SPINNER";
+export const GET_VIDEO = "GET_VIDEO";
+export const GET_USER = "GET_USER";
+export const GET_SEARCH_VIDEOS = "GET_SEARCH_VIDEOS";

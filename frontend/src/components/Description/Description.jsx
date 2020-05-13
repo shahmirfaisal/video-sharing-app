@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./Description.module.css";
 
-export const Description = () => {
+export const Description = ({ text }) => {
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => {
@@ -15,10 +15,7 @@ export const Description = () => {
 
   return (
     <div>
-      <p className={classNames.join(" ")}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit quaerat
-        error sapiente facilis quas nihil dolorem, culpa fuga consequatur. Fuga!
-      </p>
+      <p className={classNames.join(" ")}>{text}</p>
 
       <p onClick={toggleReadMore} className={classes.readMore}>
         {readMore ? "Read Less" : "Read More"}

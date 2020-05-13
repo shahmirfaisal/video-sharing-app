@@ -15,6 +15,7 @@ export const Main = styled.main`
   .content {
     padding: 2rem;
     background-color: rgba(0, 0, 0, 0.01);
+    position: relative;
 
     @media (max-width: 870px) {
       grid-area: 2 / 1 / 3 / 2;

@@ -2,13 +2,12 @@ import React from "react";
 import { Video } from "../Video/Video";
 import { Videos as StyledVideos } from "../../styled-components/Videos";
 
-export const Videos = () => {
+export const Videos = ({ videos }) => {
   return (
     <StyledVideos>
-      <Video />
-      <Video />
-      <Video />
-      <Video />
+      {videos.map((video, i) => (
+        <Video key={video._id} {...video} />
+      ))}
     </StyledVideos>
   );
 };

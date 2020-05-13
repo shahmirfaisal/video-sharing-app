@@ -1,31 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Video as StyledVideo } from "../../styled-components/Video";
 import videoSrc from "../../assets/videoplayback (3).mp4";
 import { useHistory } from "react-router-dom";
 
-export const Video = () => {
+export const Video = (props) => {
+  const {
+    _id,
+    video,
+    thumbnail,
+    user,
+    comments,
+    title,
+    description,
+    createdAt,
+    favourites,
+  } = props;
+
+  useEffect(() => {
+    console.log(video);
+  }, []);
+
   const history = useHistory();
 
   return (
     <StyledVideo>
       <div className="video">
-        <video src={videoSrc}></video>
+        <video
+          poster={thumbnail === "" ? "" : `http://localhost:5000/${thumbnail}`}
+          src={`http://localhost:5000/${video}`}
+        ></video>
       </div>
 
       <div className="body">
-        <h3 className="title" onClick={() => history.push("/video/123")}>
-          MERN Stack tutorial
+        <h3 className="title" onClick={() => history.push(`/video/${_id}`)}>
+          {title}
         </h3>
 
-        <div className="icon" onClick={() => history.push("/video/123")}>
+        <div className="icon" onClick={() => history.push(`/video/${_id}`)}>
           <i className="fas fa-play"></i>
         </div>
 
-        <p className="creator" onClick={() => history.push("/user/123")}>
-          By Kyle
+        <p
+          className="creator"
+          onClick={() => history.push(`/user/${user._id}`)}
+        >
+          By {user.name}
         </p>
 
-        <p className="date">3 May, 2020</p>
+        <p className="date">{createdAt}</p>
       </div>
     </StyledVideo>
   );

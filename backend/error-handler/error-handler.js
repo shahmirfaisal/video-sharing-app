@@ -1,3 +1,5 @@
+// Reusable error handler function
+
 module.exports = (next, message, statusCode) => {
     const error = new Error(message);
     error.statusCode = statusCode || 500;
