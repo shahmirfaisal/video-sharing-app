@@ -3,12 +3,11 @@ import classes from "./NavBar.module.css";
 import { Button } from "../../styled-components/Button";
 import { useHistory } from "react-router-dom";
 import { useInput } from "../../hooks/useInput";
+import { connect } from "react-redux";
 
-export const NavBar = ({ openSideBar }) => {
+const NavBar = ({ openSideBar, isAuth }) => {
   const history = useHistory();
   const [value, changeValue, reset] = useInput("");
-
-  const isAuth = true;
 
   const searchVideos = (e) => {
     e.preventDefault();
@@ -48,3 +47,13 @@ export const NavBar = ({ openSideBar }) => {
     </nav>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.isAuth,
+  };
+};
+
+const NavBarComponent = connect(mapStateToProps)(NavBar);
+
+export { NavBarComponent as NavBar };

@@ -8,5 +8,4 @@ export const Backdrop = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
-  display: ${(props) => (props.open ? "block" : "none")};
 `;

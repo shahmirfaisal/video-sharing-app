@@ -15,42 +15,68 @@ import { UploadVideo } from "../pages/UploadVideo/UploadVideo";
 import { Backdrop } from "../styled-components/Backdrop";
 import { Spinner } from "../components/Spinner/Spinner";
 import { connect } from "react-redux";
+import { isLogin } from "../store/actions/actionCreators";
 
-const App = () => {
+const App = ({ showBackdropSpinner, showFullScreenSpinner, isLogin }) => {
+  useEffect(() => {
+    isLogin();
+  }, []);
+
   const [showSideBar, setShowSideBar] = useState(false);
 
   const openSideBar = () => setShowSideBar(true);
   const closeSideBar = () => setShowSideBar(false);
 
   return (
-    <Main>
-      <NavBar openSideBar={openSideBar} />
+    <>
+      {showFullScreenSpinner ? (
+        <Spinner />
+      ) : (
+        <Main>
+          <NavBar openSideBar={openSideBar} />
 
-      <div className="sidebar">
-        <SideBar showSideBar={showSideBar} />
-      </div>
+          <div className="sidebar">
+            <SideBar showSideBar={showSideBar} />
+          </div>
 
-      <Backdrop open={showSideBar} onClick={closeSideBar} />
+          {showSideBar ? <Backdrop onClick={closeSideBar} /> : null}
 
-      <div className="content">
-        <Route path="/" exact component={Home} />
-        <Route path="/videos" exact component={MyVideos} />
-        <Route path="/favourites" component={Favourites} />
-        <Route path="/user/:id" component={Profile} />
-        <Route path="/search" component={Search} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/video/:id" component={FullVideo} />
-        <Route path="/upload-video" component={UploadVideo} />
-      </div>
-    </Main>
+          <div className="content">
+            <Route path="/" exact component={Home} />
+            <Route path="/my-videos" exact component={MyVideos} />
+            <Route path="/favourites" component={Favourites} />
+            <Route path="/user/:id" component={Profile} />
+            <Route path="/search" component={Search} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/video/:id" component={FullVideo} />
+            <Route path="/upload-video" component={UploadVideo} />
+          </div>
+
+          {showBackdropSpinner ? (
+            <>
+              <Backdrop />
+              <Spinner />
+            </>
+          ) : null}
+        </Main>
+      )}
+    </>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     showContentSpinner: state.showContentSpinner,
+    showBackdropSpinner: state.showBackdropSpinner,
+    showFullScreenSpinner: state.showFullScreenSpinner,
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    isLogin: () => dispatch(isLogin()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

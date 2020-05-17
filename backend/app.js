@@ -58,7 +58,7 @@ app.use("/videos", videoRoutes);
 app.use((error, req, res, next) => {
   console.log(error);
   res.status(error.statusCode).json({
-    message: error.message,
+    message: error.message
   });
 });
 

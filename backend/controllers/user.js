@@ -103,3 +103,35 @@ exports.patchUser = async (req, res, next) => {
         errorHandler(next, error.message);
     }
 }
+
+
+exports.isLogin = async (req, res, next) => {
+    const token = req.get("Authorization");
+
+    // If the client doesn't attach the Authorization header with the request
+    if (!token) {
+        return errorHandler(next, "Not Authenticated!", 401);
+    }
+
+    let decodedToken;
+
+    try {
+        decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+    } catch (error) {
+        // For technical errors
+        return errorHandler(next, error.message);
+    }
+
+    if (!decodedToken) {
+        // If the token is invalid
+        return errorHandler(next, "Not Authenticated!", 401);
+    }
+
+    console.log(decodedToken)
+    try {
+        const user = await User.findById(decodedToken.userId);
+        res.status(200).json(user);
+    } catch (error) {
+        return errorHandler(next, error.message);
+    }
+}

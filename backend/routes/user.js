@@ -10,10 +10,13 @@ router.post("/signup", signupValidator, userController.signup);
 // POST - /user/login ----- Login the user
 router.post("/login", loginValidator, userController.login);
 
-// GET - /user/:id ----- Getting a specific user
-router.get("/:id", userController.getUser);
-
 // PATCH - /user/ ----- Updating the current user
 router.patch("/", checkAuth, userController.patchUser);
+
+// GET - /user/isLogin ----- Checking whether the user is logged in or not
+router.get("/isLogin", userController.isLogin);
+
+// GET - /user/:id ----- Getting a specific user
+router.get("/:id", userController.getUser);
 
 module.exports = router;

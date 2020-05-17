@@ -17,6 +17,10 @@ const Profile = ({ showContentSpinner, getUser, user }) => {
     getUser(id);
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   useDocumentTitle("Web Dev Simplified");
 
   return (

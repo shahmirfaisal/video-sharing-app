@@ -1,19 +1,25 @@
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 
 const initialState = {
   // User related stuff
-  isAuth: true,
+  isAuth: false,
   user: null,
+  token: null,
+  currentUser: null,
 
   // Spinners related stuff
-  showFullScreenSpinner: false,
-  showContentSpinner: true,
+  showFullScreenSpinner: true,
+  showContentSpinner: false,
   showBackdropSpinner: false,
 
   // Videos related stuff
   videos: null,
   video: null,
-  searchVideos: null
+  searchVideos: null,
+  myVideos: null,
+
+  // Errors related stuff
+  authError: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -21,34 +27,74 @@ export const reducer = (state = initialState, action) => {
     case actions.GET_ALL_VIDEOS:
       return {
         ...state,
-        videos: action.videos
+        videos: action.videos,
+      };
+
+    case actions.TOGGLE_CONTENT_SPINNER:
+      return {
+        ...state,
+        showContentSpinner: action.value,
+      };
+
+    case actions.GET_VIDEO:
+      return {
+        ...state,
+        video: action.video,
+      };
+
+    case actions.GET_USER:
+      return {
+        ...state,
+        user: action.user,
+      };
+
+    case actions.GET_SEARCH_VIDEOS:
+      return {
+        ...state,
+        searchVideos: action.videos,
+      };
+
+    case actions.TOGGLE_BACKDROP_SPINNER:
+      return {
+        ...state,
+        showBackdropSpinner: action.value
       }
 
-      case actions.TOGGLE_CONTENT_SPINNER:
+      case actions.ADD_AUTH_ERROR:
         return {
           ...state,
-          showContentSpinner: action.value
+          authError: action.error
         }
 
-        case actions.GET_VIDEO:
+        case actions.LOGIN:
           return {
             ...state,
-            video: action.video
+            currentUser: action.user,
+              token: action.token,
+              isAuth: true
           }
 
-          case actions.GET_USER:
+          case actions.TOGGLE_FULL_SCREEN_SPINNER:
             return {
               ...state,
-              user: action.user
+              showFullScreenSpinner: action.value
             }
 
-            case actions.GET_SEARCH_VIDEOS:
+            case actions.LOGOUT:
               return {
                 ...state,
-                searchVideos: action.videos
+                isAuth: false,
+                  currentUser: null,
+                  token: null
               }
 
-              default:
-                return state;
+              case actions.ADD_MY_VIDEOS:
+                return {
+                  ...state,
+                  myVideos: action.videos
+                }
+
+                default:
+                  return state;
   }
 };
