@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./SideBar.module.css";
 import Logo from "../../assets/logo.png";
 import { NavLink, useHistory } from "react-router-dom";

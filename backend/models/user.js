@@ -11,10 +11,7 @@ const userSchema = new Schema({
         type: String,
         default: "assets/profile-img.jpg"
     },
-    subscribers: {
-        type: Number,
-        default: 0
-    },
+    subscribers: [Schema.Types.ObjectId],
     email: {
         type: String,
         required: true

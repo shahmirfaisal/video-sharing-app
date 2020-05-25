@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Video as StyledVideo } from "../../styled-components/Video";
-import videoSrc from "../../assets/videoplayback (3).mp4";
 import { useHistory } from "react-router-dom";
 
 export const Video = (props) => {
@@ -15,10 +14,6 @@ export const Video = (props) => {
     createdAt,
     favourites,
   } = props;
-
-  useEffect(() => {
-    console.log(video);
-  }, []);
 
   const history = useHistory();
 

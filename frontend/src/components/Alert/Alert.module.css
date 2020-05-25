@@ -1,0 +1,32 @@
+.alert {
+    background-color: rgb(55, 78, 215);
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    width: 100vw;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem 0;
+    animation: slide 2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    20% {
+        transform: translateY(0);
+    }
+
+    80% {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}

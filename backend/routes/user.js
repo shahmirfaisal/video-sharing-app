@@ -19,4 +19,10 @@ router.get("/isLogin", userController.isLogin);
 // GET - /user/:id ----- Getting a specific user
 router.get("/:id", userController.getUser);
 
+// POST - /user/subscribe/:id ----- Subscribing to a specific user's channal
+router.post("/subscribe/:id", checkAuth, userController.postSubscribe);
+
+// POST - /user/unsubscribe/:id ----- Unsubscribing to a specific user's channal
+router.post("/unsubscribe/:id", checkAuth, userController.postUnSubscribe);
+
 module.exports = router;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Main } from "../styled-components/Main";
 import { NavBar } from "../components/NavBar/NavBar";
 import { SideBar } from "../components/SideBar/SideBar";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
 import { MyVideos } from "../pages/MyVideos/MyVideos";
 import { Favourites } from "../pages/Favourites/Favourites";
@@ -16,8 +16,16 @@ import { Backdrop } from "../styled-components/Backdrop";
 import { Spinner } from "../components/Spinner/Spinner";
 import { connect } from "react-redux";
 import { isLogin } from "../store/actions/actionCreators";
+import { EditProfile } from "../pages/EditProfile/EditProfile";
+import { Alert } from "../components/Alert/Alert";
+import { Page404 } from "../components/404/404";
 
-const App = ({ showBackdropSpinner, showFullScreenSpinner, isLogin }) => {
+const App = ({
+  showBackdropSpinner,
+  showFullScreenSpinner,
+  isLogin,
+  showAlert,
+}) => {
   useEffect(() => {
     isLogin();
   }, []);
@@ -42,21 +50,27 @@ const App = ({ showBackdropSpinner, showFullScreenSpinner, isLogin }) => {
           {showSideBar ? <Backdrop onClick={closeSideBar} /> : null}
 
           <div className="content">
-            <Route path="/" exact component={Home} />
-            <Route path="/my-videos" exact component={MyVideos} />
-            <Route path="/favourites" component={Favourites} />
-            <Route path="/user/:id" component={Profile} />
-            <Route path="/search" component={Search} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
-            <Route path="/video/:id" component={FullVideo} />
-            <Route path="/upload-video" component={UploadVideo} />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/my-videos" exact component={MyVideos} />
+              <Route path="/favourites" component={Favourites} />
+              <Route path="/user/:id" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              <Route path="/video/:id" component={FullVideo} />
+              <Route path="/upload-video" component={UploadVideo} />
+              <Route path="/edit-profile" component={EditProfile} />
+              <Route component={Page404} />
+            </Switch>
           </div>
+
+          {showAlert ? <Alert /> : null}
 
           {showBackdropSpinner ? (
             <>
               <Backdrop />
-              <Spinner />
+              <Spinner fixed color="white" />
             </>
           ) : null}
         </Main>
@@ -67,9 +81,9 @@ const App = ({ showBackdropSpinner, showFullScreenSpinner, isLogin }) => {
 
 const mapStateToProps = (state) => {
   return {
-    showContentSpinner: state.showContentSpinner,
     showBackdropSpinner: state.showBackdropSpinner,
     showFullScreenSpinner: state.showFullScreenSpinner,
+    showAlert: state.showAlert,
   };
 };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./Comment.module.css";
-import imgSrc from "../../assets/profile-img.jpg";
 import { Image } from "../Image/Image";
 import { Description } from "../Description/Description";
 import { useHistory } from "react-router-dom";

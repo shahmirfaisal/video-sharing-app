@@ -13,6 +13,8 @@ export const Video = styled.div`
   video {
     width: 100%;
     border-radius: 3px 3px 0 0;
+    object-fit: cover;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
   }
 
   .title {
@@ -48,10 +50,14 @@ export const Video = styled.div`
     }
 
     .creator {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       font-size: 0.9rem;
       margin: 0.8rem 0;
       font-weight: 500;
       opacity: 0.8;
+      text-align: left;
       :hover {
         text-decoration: underline;
         cursor: pointer;
@@ -62,6 +68,7 @@ export const Video = styled.div`
       font-size: 0.85rem;
       font-weight: 500;
       opacity: 0.8;
+      text-align: left;
     }
   }
 `;

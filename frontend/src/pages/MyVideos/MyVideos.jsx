@@ -5,12 +5,22 @@ import { Heading } from "../../styled-components/Heading";
 import { connect } from "react-redux";
 import { getMyVideos } from "../../store/actions/actionCreators";
 import { Spinner } from "../../components/Spinner/Spinner";
+import { useHistory } from "react-router-dom";
 
-const MyVideos = ({ videos, getVideos, currentUser, showContentSpinner }) => {
+const MyVideos = ({
+  videos,
+  getVideos,
+  currentUser,
+  showContentSpinner,
+  isAuth,
+}) => {
   useDocumentTitle("My Videos");
 
+  const history = useHistory();
+
   useEffect(() => {
-    if (!videos) getVideos(currentUser._id);
+    if (!isAuth) history.replace("/");
+    else if (!videos) getVideos(currentUser._id);
   }, []);
 
   return (
@@ -26,6 +36,7 @@ const mapStateToProps = (state) => {
     videos: state.myVideos,
     currentUser: state.currentUser,
     showContentSpinner: state.showContentSpinner,
+    isAuth: state.isAuth,
   };
 };
 

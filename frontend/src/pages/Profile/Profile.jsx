@@ -1,27 +1,39 @@
 import React, { useEffect } from "react";
 import classes from "./Profile.module.css";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
-import imgSrc from "../../assets/profile-img.jpg";
 import { Button } from "../../styled-components/Button";
 import { Videos } from "../../components/Videos/Videos";
 import { Image } from "../../components/Image/Image";
 import { connect } from "react-redux";
-import { getUser } from "../../store/actions/actionCreators";
+import { getUser, toggleSubscribe } from "../../store/actions/actionCreators";
 import { Spinner } from "../../components/Spinner/Spinner";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
-const Profile = ({ showContentSpinner, getUser, user }) => {
+const Profile = ({
+  showContentSpinner,
+  getUser,
+  user,
+  currentUser,
+  token,
+  toggleSubscribe,
+}) => {
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     getUser(id);
-  }, []);
+  }, [id]);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useDocumentTitle(user?.user?.name || "Video Sharing App");
 
-  useDocumentTitle("Web Dev Simplified");
+  const toggleSubscribeHandler = () => {
+    if (!currentUser) return history.push("/login");
+    toggleSubscribe(
+      user.user._id,
+      token,
+      !user.user.subscribers.includes(currentUser._id)
+    );
+  };
 
   return (
     <>
@@ -40,10 +52,20 @@ const Profile = ({ showContentSpinner, getUser, user }) => {
 
             <div className={classes.info}>
               <h3>{user.user.name}</h3>
-              <p>{user.user.subscribers} subscribers</p>
+              <p>{user.user.subscribers.length} subscribers</p>
             </div>
 
-            <Button>SUBSCRIBE</Button>
+            {user.user._id === currentUser?._id ? (
+              <Button onClick={() => history.push("/edit-profile")}>
+                Edit Profile
+              </Button>
+            ) : (
+              <Button onClick={toggleSubscribeHandler}>
+                {user.user.subscribers.includes(currentUser?._id)
+                  ? "UNSUBSCRIBE"
+                  : "SUBSCRIBE"}
+              </Button>
+            )}
           </header>
 
           <h2 className={classes.heading}>Videos</h2>
@@ -59,12 +81,16 @@ const mapStateToprops = (state) => {
   return {
     showContentSpinner: state.showContentSpinner,
     user: state.user,
+    currentUser: state.currentUser,
+    token: state.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (_id) => dispatch(getUser(_id)),
+    toggleSubscribe: (userId, token, bool) =>
+      dispatch(toggleSubscribe(userId, token, bool)),
   };
 };
 

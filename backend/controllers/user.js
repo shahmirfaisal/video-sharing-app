@@ -25,7 +25,8 @@ exports.signup = async (req, res, next) => {
         const user = new User({
             name,
             email,
-            password
+            password,
+            subscribers: []
         });
         await user.save();
 
@@ -133,5 +134,41 @@ exports.isLogin = async (req, res, next) => {
         res.status(200).json(user);
     } catch (error) {
         return errorHandler(next, error.message);
+    }
+}
+
+
+exports.postSubscribe = async (req, res, next) => {
+    const {
+        id: userId
+    } = req.params;
+    const currentUserId = req.userId;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user.subscribers.includes(currentUserId)) user.subscribers.push(currentUserId);
+        const result = await user.save();
+        console.log(user)
+        res.status(200).json(result);
+    } catch (error) {
+        errorHandler(next, error.message);
+    }
+}
+
+exports.postUnSubscribe = async (req, res, next) => {
+    const {
+        id: userId
+    } = req.params;
+    const currentUserId = req.userId;
+    console.log(userId, currentUserId)
+
+    try {
+        const user = await User.findById(userId);
+        user.subscribers = user.subscribers.filter(id => id != currentUserId);
+        const result = await user.save();
+        console.log("Unsubscribe", user)
+        res.status(200).json(result);
+    } catch (error) {
+        errorHandler(next, error.message);
     }
 }

@@ -9,10 +9,15 @@ import { login } from "../../store/actions/actionCreators";
 import { useHistory } from "react-router-dom";
 import { useInput } from "../../hooks/useInput";
 import { Error } from "../../styled-components/Error";
+import * as actions from "../../store/actions/actions";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
-const Login = ({ login, error, isAuth }) => {
+const Login = ({ login, error, isAuth, removeErrors }) => {
+  useDocumentTitle("Login");
+
   useEffect(() => {
     if (isAuth) history.replace("/");
+    return () => removeErrors();
   }, []);
 
   const history = useHistory();
@@ -74,6 +79,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     login: (email, password, history) =>
       dispatch(login(email, password, history)),
+    removeErrors: () => dispatch({ type: actions.REMOVE_AUTH_ERROR }),
   };
 };
 

@@ -1,12 +1,20 @@
 import React from "react";
 import classes from "./Spinner.module.css";
+import Spinner from "react-spinkit";
 
-export const Spinner = () => {
+const SpinnerComp = (props) => {
   return (
-    <div className={classes.spinner}>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div
+      style={{ position: props.fixed ? "fixed" : "absolute" }}
+      className={classes.spinner}
+    >
+      <Spinner
+        name="pacman"
+        color={props.color || "rgb(55,78,215)"}
+        fadeIn="none"
+      />
     </div>
   );
 };
+
+export { SpinnerComp as Spinner };

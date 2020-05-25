@@ -17,9 +17,14 @@ const initialState = {
   video: null,
   searchVideos: null,
   myVideos: null,
+  favouriteVideos: null,
 
   // Errors related stuff
   authError: null,
+
+  // Alert related stuff
+  showAlert: false,
+  alertMessage: null
 };
 
 export const reducer = (state = initialState, action) => {
@@ -57,44 +62,117 @@ export const reducer = (state = initialState, action) => {
     case actions.TOGGLE_BACKDROP_SPINNER:
       return {
         ...state,
-        showBackdropSpinner: action.value
+        showBackdropSpinner: action.value,
+      };
+
+    case actions.ADD_AUTH_ERROR:
+      return {
+        ...state,
+        authError: action.error,
+      };
+
+    case actions.LOGIN:
+      return {
+        ...state,
+        currentUser: action.user,
+          token: action.token,
+          isAuth: true,
+      };
+
+    case actions.TOGGLE_FULL_SCREEN_SPINNER:
+      return {
+        ...state,
+        showFullScreenSpinner: action.value,
+      };
+
+    case actions.LOGOUT:
+      return {
+        ...state,
+        isAuth: false,
+          currentUser: null,
+          token: null,
+      };
+
+    case actions.ADD_MY_VIDEOS:
+      return {
+        ...state,
+        myVideos: action.videos,
+      };
+
+    case actions.ADD_FAVOURITE_VIDEOS:
+      return {
+        ...state,
+        favouriteVideos: action.videos,
+      };
+
+    case actions.ADD_VIDEO:
+      return {
+        ...state,
+        videos: state.videos ? state.videos.concat(action.video) : null,
+          myVideos: state.myVideos ? state.myVideos.concat(action.video) : null,
+      };
+
+    case actions.UPDATE_VIDEO:
+      return {
+        ...state,
+        video: action.video,
+          favouriteVideos: null
+      };
+
+    case actions.UPDATE_USER:
+      return {
+        ...state,
+        currentUser: action.user
+      };
+
+    case actions.REMOVE_AUTH_ERROR:
+      return {
+        ...state,
+        authError: null
+      };
+
+    case actions.SHOW_ALERT:
+      return {
+        ...state,
+        showAlert: true,
+          alertMessage: action.message
+      };
+
+    case actions.REMOVE_ALERT:
+      return {
+        ...state,
+        showAlert: false,
+          alertMessage: null
+      };
+
+    case actions.TOGGLE_SUBSCRIBE:
+      let user = state.user;
+      let video = state.video;
+
+      if (user) {
+        if (user.user._id === action.user._id) {
+          user.user = {
+            ...action.user
+          };
+        }
       }
 
-      case actions.ADD_AUTH_ERROR:
-        return {
-          ...state,
-          authError: action.error
+      if (video) {
+        if (video.user._id === action.user._id) {
+          video.user = {
+            ...action.user
+          };
         }
+      }
 
-        case actions.LOGIN:
-          return {
-            ...state,
-            currentUser: action.user,
-              token: action.token,
-              isAuth: true
-          }
+      return {
+        ...state,
+        user,
+        video
+      };
 
-          case actions.TOGGLE_FULL_SCREEN_SPINNER:
-            return {
-              ...state,
-              showFullScreenSpinner: action.value
-            }
 
-            case actions.LOGOUT:
-              return {
-                ...state,
-                isAuth: false,
-                  currentUser: null,
-                  token: null
-              }
-
-              case actions.ADD_MY_VIDEOS:
-                return {
-                  ...state,
-                  myVideos: action.videos
-                }
-
-                default:
-                  return state;
+    default:
+      return state;
   }
 };

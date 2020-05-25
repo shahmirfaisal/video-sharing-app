@@ -27,7 +27,7 @@ exports.postVideo = async (req, res, next) => {
   }
 
   let video = req.files.video;
-  let img = req.files.img;
+  let img = req.files.image;
 
   if (!video) return errorHandler(next, "Please upload a video", 422);
 

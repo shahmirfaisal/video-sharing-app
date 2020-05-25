@@ -11,7 +11,8 @@ const NavBar = ({ openSideBar, isAuth }) => {
 
   const searchVideos = (e) => {
     e.preventDefault();
-    history.push(`/search?search=${value}`);
+    if (value.trim().length === 0) return;
+    history.push(`/search?search=${value.trim()}`);
     reset();
   };
 

@@ -8,16 +8,20 @@ import { signup } from "../../store/actions/actionCreators";
 import { useInput } from "../../hooks/useInput";
 import { connect } from "react-redux";
 import { Error } from "../../styled-components/Error";
+import * as actions from "../../store/actions/actions";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
-const Signup = ({ signup, error, isAuth }) => {
+const Signup = ({ signup, error, isAuth, removeErrors }) => {
   useEffect(() => {
     if (isAuth) history.replace("/");
+    return () => removeErrors();
   }, []);
+  useDocumentTitle("Signup");
 
   const history = useHistory();
-  const [name, changeName, resetName] = useInput("");
-  const [email, changeEmail, resetEmail] = useInput("");
-  const [password, changePassword, resetPassword] = useInput("");
+  const [name, changeName] = useInput("");
+  const [email, changeEmail] = useInput("");
+  const [password, changePassword] = useInput("");
 
   const signupHandler = (e) => {
     e.preventDefault();
@@ -82,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     signup: (name, email, password, history) =>
       dispatch(signup(name, email, password, history)),
+    removeErrors: () => dispatch({ type: actions.REMOVE_AUTH_ERROR }),
   };
 };
 

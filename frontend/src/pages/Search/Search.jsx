@@ -6,14 +6,15 @@ import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { getSearchVideos } from "../../store/actions/actionCreators";
 import classes from "./Search.module.css";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const Search = ({ showContentSpinner, videos, getVideos }) => {
   const { search } = useLocation();
+  useDocumentTitle(`Search result for ${search}`);
 
   useEffect(() => {
     const url = new URLSearchParams(search);
     const searchText = url.get("search");
-    console.log(searchText);
     getVideos(searchText);
   }, [search]);
 
