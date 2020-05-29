@@ -21,7 +21,7 @@ import {
 import thunk from "redux-thunk";
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://video-sharing-mern-app.herokuapp.com/";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

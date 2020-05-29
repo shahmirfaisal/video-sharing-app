@@ -23,7 +23,7 @@ const ProfileInfo = ({ user, currentUser, token, toggleSubscribe }) => {
       <Image
         width="3.7rem"
         height="3.7rem"
-        src={`http://localhost:5000/${user.image}`}
+        src={user.image}
         alt="Profile Image"
       />
 
@@ -32,11 +32,14 @@ const ProfileInfo = ({ user, currentUser, token, toggleSubscribe }) => {
         <p>{user.subscribers.length} subscribers</p>
       </div>
 
-      <Button onClick={toggleSubscribeHandler} style={{ marginTop: "0.5rem" }}>
+     { user._id === currentUser._id?
+        null:
+        <Button onClick={toggleSubscribeHandler} style={{ marginTop: "0.5rem" }}>
         {user.subscribers.includes(currentUser?._id)
           ? "UNSUBSCRIBE"
           : "SUBSCRIBE"}
-      </Button>
+        </Button> 
+      }
     </div>
   );
 };

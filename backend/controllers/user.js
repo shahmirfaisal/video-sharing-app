@@ -6,6 +6,7 @@ const {
 } = require("express-validator");
 const errorHandler = require("../error-handler/error-handler");
 const Video = require("../models/video");
+const cloudinary = require("cloudinary").v2;
 
 
 exports.signup = async (req, res, next) => {
@@ -95,8 +96,11 @@ exports.patchUser = async (req, res, next) => {
     try {
         const user = await User.findById(id);
         if (name.length > 0) user.name = name;
-        if (img) user.image = img[0].path;
-
+        if (img) {
+            var uploadResult = await cloudinary.uploader.upload(img[0].path);
+            user.image = uploadResult.url;
+            console.log(uploadResult);
+        }
         const result = await user.save();
         res.status(200).json(result);
 

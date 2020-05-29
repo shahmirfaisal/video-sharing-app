@@ -21,8 +21,8 @@ export const Video = (props) => {
     <StyledVideo>
       <div className="video">
         <video
-          poster={thumbnail === "" ? "" : `http://localhost:5000/${thumbnail}`}
-          src={`http://localhost:5000/${video}`}
+          poster={thumbnail}
+          src={video}
         ></video>
       </div>
 

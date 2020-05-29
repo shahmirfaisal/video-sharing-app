@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
-        default: "assets/profile-img.jpg"
+        default: "https://res.cloudinary.com/dw3ap99ie/image/upload/v1590679237/1589133680691-profile-img_bgii9i.jpg"
     },
     subscribers: [Schema.Types.ObjectId],
     email: {

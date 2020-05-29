@@ -6,8 +6,16 @@ const multer = require("multer");
 const path = require("path");
 const userRoutes = require("./routes/user");
 const videoRoutes = require("./routes/video");
+const cloudinary = require("cloudinary").v2;
 
 const app = express();
+
+// Configuring Cloudinary
+cloudinary.config({
+  cloud_name: 'dw3ap99ie',
+  api_key: '821523511441267',
+  api_secret: 'gB05RfIeRoEEaWJE-Tfx710utvQ'
+});
 
 // CORS
 app.use((req, res, next) => {
@@ -62,11 +70,33 @@ app.use((error, req, res, next) => {
   });
 });
 
+app.post("/image", async (req, res, next) => {
+  console.log(req.files.image[0].path);
+  try {
+    const result = await cloudinary.uploader.upload(req.files.image[0].path);
+    console.log(result);
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/video", async (req, res, next) => {
+  console.log(req.files.video[0].path);
+  cloudinary.uploader.upload_large(req.files.video[0].path, {
+      resource_type: "video",
+    },
+    (error, result) => {
+      console.log(result, error)
+      res.json(result)
+    });
+});
+
 
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((result) => app.listen(5000))
+  .then((result) => app.listen(process.env.PORT || 5000))
   .catch((err) => console.log(err));

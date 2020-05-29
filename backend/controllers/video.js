@@ -3,6 +3,7 @@ const errorHandler = require("../error-handler/error-handler");
 const {
   validationResult
 } = require("express-validator");
+const cloudinary = require("cloudinary").v2;
 
 exports.getVideos = async (req, res, next) => {
   try {
@@ -32,7 +33,18 @@ exports.postVideo = async (req, res, next) => {
   if (!video) return errorHandler(next, "Please upload a video", 422);
 
   video = video[0].path;
-  img = img ? img[0].path : "";
+  cloudinary.uploader.upload_large(video, {
+    resource_type: "video"
+  }, async (error,result) => {
+    if(error) return errorHandler(next,error.message);
+
+    video = result.url;
+    
+  try {
+    if(img) {
+    const imgResult = await cloudinary.uploader.upload(img[0].path);
+    img = imgResult.url;
+    } else img = "";
 
   const newVideo = new Video({
     video,
@@ -43,14 +55,16 @@ exports.postVideo = async (req, res, next) => {
     comments: [],
     favourites: [],
   });
+  console.log(newVideo)
 
-  try {
+  
     await newVideo.save();
     await newVideo.populate("user").execPopulate();
     res.status(201).json(newVideo);
   } catch (error) {
     errorHandler(next, error.message);
   }
+  })
 };
 
 

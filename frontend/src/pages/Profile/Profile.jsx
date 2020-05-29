@@ -43,7 +43,7 @@ const Profile = ({
         <section>
           <header className={classes.header}>
             <Image
-              src={`http://localhost:5000/${user.user.image}`}
+              src={user.user.image}
               alt="Profile Image"
               width="10rem"
               height="10rem"

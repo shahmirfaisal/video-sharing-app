@@ -19,9 +19,7 @@ const EditProfile = ({ editProfile, token, user }) => {
   }, []);
 
   const [name, changeName] = useInput(user?.name);
-  const [uploadImg, imgSrc, imgFile] = useFileUpload(
-    `http://localhost:5000/${user?.image}`
-  );
+  const [uploadImg, imgSrc, imgFile] = useFileUpload(user?.image);
   const history = useHistory();
 
   const editProfileHandler = (e) => {

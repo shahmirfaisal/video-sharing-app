@@ -63,7 +63,7 @@ const FullVideo = ({
       ) : (
         <section className={classes.fullVideo}>
           <div className={classes.video}>
-            <Player src={`http://localhost:5000/${video.video}`} />
+            <Player src={video.video} />
           </div>
 
           <h3 className={classes.title}>{video.title}</h3>
